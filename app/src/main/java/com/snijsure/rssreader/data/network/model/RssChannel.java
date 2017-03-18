@@ -1,5 +1,6 @@
 package com.snijsure.rssreader.data.network.model;
 
+import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
@@ -9,6 +10,13 @@ import java.util.List;
 public class RssChannel implements Serializable {
     @ElementList(name = "item", required = true, inline = true)
     private List<RssFeedItem> itemList;
+
+    @Element
+    private String link;
+
+    public String getLink() {
+        return link;
+    }
 
     public List<RssFeedItem> getItemList() {
         return itemList;

@@ -24,6 +24,9 @@ public class RssFeedItem implements Serializable {
     public RssFeedItem() {}
 
 
+//    public void getLink() {
+//        RssLink.getLink();
+//    }
 
     public String getTitle() {
         return title;

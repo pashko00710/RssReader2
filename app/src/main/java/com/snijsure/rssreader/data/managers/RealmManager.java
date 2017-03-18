@@ -1,5 +1,7 @@
 package com.snijsure.rssreader.data.managers;
 
+import android.util.Log;
+
 import com.snijsure.rssreader.data.storage.realm.RssItemRealm;
 import com.snijsure.rssreader.data.network.model.RssFeed;
 import com.snijsure.rssreader.data.network.model.RssFeedItem;
@@ -15,7 +17,8 @@ public class RealmManager {
     private int orderId;
 
     public Observable<RssItemRealm> getRssItemsFromRealm(String channel) {
-        RealmResults<RssItemRealm> manageProduct = getQueryRealmInstance().where(RssItemRealm.class).equalTo("channel", channel).findAll();
+        RealmResults<RssItemRealm> manageProduct = getQueryRealmInstance().where(RssItemRealm.class)
+                .equalTo("channel", "https://habrahabr.ru/posts/collective/"+channel+"/").findAll();
         return manageProduct
                 .asObservable() //получаем RealmResult как Observable
                 .filter(RealmResults::isLoaded) //получаем только загруженные результаты (hotObservable)
@@ -30,13 +33,18 @@ public class RealmManager {
         return mRealmInstance;
     }
 
-    public void saveQuotesResponseToRealm(RssFeed feed, String rssChannel) {
+    public void saveQuotesResponseToRealm(RssFeed feed) {
         Realm realm = Realm.getDefaultInstance();
+
+        for (RssFeedItem item: feed.getChannel().getItemList()) {
+            Log.e("lul", "saveQuotesResponseToRealm: "+feed.getChannel().getLink());
+        }
+
 
         List<RssFeedItem> items = feed.getChannel().getItemList();
 
         for (RssFeedItem item:items) {
-            RssItemRealm rssItemRealm =  new RssItemRealm(item, getOrderId(), rssChannel);
+            RssItemRealm rssItemRealm =  new RssItemRealm(item, getOrderId(), feed.getChannel().getLink());
             realm.executeTransaction(realm1 -> realm1.insertOrUpdate(rssItemRealm)); //добавляем или обновляем rss item в транзакцию
         }
 

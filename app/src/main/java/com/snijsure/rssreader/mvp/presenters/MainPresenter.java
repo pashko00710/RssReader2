@@ -17,6 +17,7 @@ public class MainPresenter extends AbstractPresenter<IMainView> {
     private static MainPresenter outInstance;
     private MainModel mModel;
     protected CompositeSubscription mCompositeSubscription;
+    private static final String TAG = "MainPresenter";
     Subscription rssItems;
     Observable<RssItemRealm> items;
 
@@ -67,23 +68,19 @@ public class MainPresenter extends AbstractPresenter<IMainView> {
 
         @Override
         public void onCompleted() {
-            Log.e("this", "onCompleted: ");
+            Log.e(TAG, "onCompleted: ");
             mCompositeSubscription.remove(rssItems);
         }
 
         @Override
         public void onError(Throwable e) {
-            Log.e("lul", "onError: "+e.getMessage());
+            Log.e(TAG, "onError: "+e.getMessage());
         }
 
         @Override
         public void onNext(RssItemRealm productRealm) {
-            Log.e("lul", "onNext: this"+productRealm.getId());
+            Log.e(TAG, "onNext: this"+productRealm.getId());
             mAdapter.addItem(productRealm);
-//            if(mAdapter.getCount() -1 == lastPagerPosition) {
-//                getRootView().hideLoad();
-//            getView().showRssItems();
-//            }
         }
     }
 }

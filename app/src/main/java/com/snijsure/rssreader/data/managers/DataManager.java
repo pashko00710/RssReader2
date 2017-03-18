@@ -5,8 +5,8 @@ import android.content.Context;
 import com.snijsure.rssreader.App;
 import com.snijsure.rssreader.data.network.RestCallTransformer;
 import com.snijsure.rssreader.data.network.RestService;
-import com.snijsure.rssreader.data.storage.realm.RssItemRealm;
 import com.snijsure.rssreader.data.network.model.RssFeed;
+import com.snijsure.rssreader.data.storage.realm.RssItemRealm;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Response;
@@ -59,7 +59,7 @@ public class DataManager {
                 .observeOn(Schedulers.io())
                 .flatMap(rssFeed -> Observable.from(new RssFeed[]{rssFeed}))
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(quotesResponse -> mRealmManager.saveQuotesResponseToRealm(quotesResponse, channel))
+                .doOnNext(quotesResponse -> mRealmManager.saveQuotesResponseToRealm(quotesResponse))
                 .flatMap(productRes -> Observable.empty());
     }
 
