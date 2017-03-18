@@ -55,7 +55,6 @@ public class RssItemAdapter extends RecyclerView.Adapter<RssItemAdapter.RssItemH
     }
 
     public void addItem(RssItemRealm product) {
-        Log.e(TAG, "addItem: "+product.getTitle());
         rssFeedItems.add(product);
         notifyDataSetChanged();
     }
@@ -78,12 +77,8 @@ public class RssItemAdapter extends RecyclerView.Adapter<RssItemAdapter.RssItemH
         if ( imageElement != null ) {
             String absoluteUrl = imageElement.absUrl("src");
             if (absoluteUrl != null) {
-//                UrlImageViewHelper.setUrlDrawable(holder.imageView, absoluteUrl,
-//                        android.R.drawable.gallery_thumb);
                 Picasso.with(mContext)
                         .load(absoluteUrl)
-                        .placeholder(android.R.drawable.gallery_thumb)
-                        .error(android.R.drawable.gallery_thumb)
                         .into(holder.imageView);
                 holder.descriptionTextField.setText(doc.body().text());
             }

@@ -18,7 +18,7 @@ public class RealmManager {
 
     public Observable<RssItemRealm> getRssItemsFromRealm(String channel) {
         RealmResults<RssItemRealm> manageProduct = getQueryRealmInstance().where(RssItemRealm.class)
-                .equalTo("channel", "https://habrahabr.ru/posts/collective/"+channel+"/").findAll();
+                .equalTo("channel", "https://habrahabr.ru/posts/collective/"+channel+"/").findAllAsync();
         return manageProduct
                 .asObservable() //получаем RealmResult как Observable
                 .filter(RealmResults::isLoaded) //получаем только загруженные результаты (hotObservable)

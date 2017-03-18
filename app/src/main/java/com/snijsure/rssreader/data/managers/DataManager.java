@@ -57,6 +57,10 @@ public class DataManager {
                 .flatMap(Observable::just) // преобразуем список List в последовательность
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
+//                .doOnNext(rssFeed -> {
+//                    for(RssFeedItem item: rssFeed.getChannel().getItemList())
+//                    Log.e("test", "getRssItemsObsFromNetwork: "+item.getTitle());
+//                })
                 .flatMap(rssFeed -> Observable.from(new RssFeed[]{rssFeed}))
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(quotesResponse -> mRealmManager.saveQuotesResponseToRealm(quotesResponse))
